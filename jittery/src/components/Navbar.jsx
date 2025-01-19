@@ -13,27 +13,10 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 
-const components = [
-  {
-    title: "Latest Posts",
-    href: "/blogs/latest",
-    description: "Check out our most recent blog posts.",
-  },
-  {
-    title: "Categories",
-    href: "/blogs/categories",
-    description: "Browse blogs by category.",
-  },
-  {
-    title: "Archives",
-    href: "/blogs/archives",
-    description: "Explore our older blog posts.",
-  },
-]
 
 export function Navbar() {
   return (
-    <div className="w-full bg-background shadow-sm">
+    <div className="w-full text-white bg-background shadow-sm">
       <div className="container mx-auto flex justify-end px-4">
         <NavigationMenu className="py-2">
           <NavigationMenuList>
