@@ -30,9 +30,8 @@ export default function CallToAction() {
   }, [])
 
   const sentences = [
-    "Up to 2x more Active Noise Cancellation.¹ Adaptive Audio that tailors noise control to your environment.²",
-    "Personalised Spatial Audio that immerses you in sound.³",
-    "And intelligent ways to minimise your exposure to loud noise.",
+    "100,000,000,000 professional photos are taken every year, approximately.",
+    "But these are the photos that are going to stay with you."
   ]
 
   return (
