@@ -1,43 +1,53 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
+
 export default function CallToAction() {
-  const sentenceRefs = useRef([]) 
+  const containerRef = useRef(null)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [maxDistance, setMaxDistance] = useState(0)
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.target instanceof HTMLElement) {
-            const opacity = Math.min(1, entry.intersectionRatio * 2)
-            entry.target.style.opacity = opacity.toString()
-          }
+    // Set initial maxDistance
+    setMaxDistance(window.innerHeight / 4)
+
+    const handleMouseMove = (event) => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect()
+        setMousePosition({
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top,
         })
-      },
-      {
-        root: null,
-        rootMargin: "-45% 0px -45% 0px",
-        threshold: Array.from({ length: 100 }, (_, i) => i / 100),
       }
-    )
+    }
 
-    sentenceRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref)
-    })
+    const handleResize = () => {
+      setMaxDistance(window.innerHeight / 4)
+    }
 
-    return () => observer.disconnect()
+    window.addEventListener("mousemove", handleMouseMove)
+    window.addEventListener("resize", handleResize)
+    
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove)
+      window.removeEventListener("resize", handleResize)
+    }
   }, [])
 
   const sentences = [
-    "Up to 2x more Active Noise Cancellation.¹ Adaptive Audio that tailors noise control to your environment.²",
-    "Personalised Spatial Audio that immerses you in sound.³",
-    "And intelligent ways to minimise your exposure to loud noise.",
+    ["100,000,000,000", "professional photos are", "taken every year,", "approximately."],
+    ["But these are the photos", "that are going to", "stay with you."],
   ]
+
+  const getOpacity = (lineRect) => {
+    if (maxDistance === 0) return 0.3 // Default opacity when maxDistance isn't set yet
+    const distance = Math.abs(mousePosition.y - (lineRect.top + lineRect.height / 2))
+    return Math.max(0, 1 - distance / maxDistance)
+  }
 
   return (
     <div className="relative h-screen w-full overflow-hidden bg-black">
-      {/* Background video/image */}
       <div
         className="absolute inset-0 z-0"
         style={{
@@ -46,28 +56,30 @@ export default function CallToAction() {
           backgroundPosition: "center",
         }}
       />
-
-      {/* Gradient overlay */}
       <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/50 to-black/50" />
-
-      {/* Scrollable text content */}
       <ScrollArea className="relative z-20 h-screen">
-        <div className="flex min-h-screen items-center justify-center px-4">
-          <div className="max-w-4xl space-y-[50vh]">
-            {sentences.map((sentence, index) => (
-              <p
-                key={index}
-                ref={(el) => {
-                  // Dynamically add refs to the array
-                  sentenceRefs.current[index] = el
-                }}
-                className="text-4xl font-semibold text-white transition-opacity duration-300 md:text-6xl lg:text-7xl"
-                style={{ opacity: index === 1 ? 1 : 0.3 }}
-              >
-                {sentence}
-              </p>
-            ))}
-          </div>
+        <div ref={containerRef} className="flex flex-col items-center justify-center min-h-screen w-full px-4 py-20">
+          {sentences.map((sentence, sentenceIndex) => (
+            <div key={sentenceIndex} className="mb-20 last:mb-0">
+              {sentence.map((line, lineIndex) => {
+                const opacity = getOpacity(
+                  containerRef.current?.children[sentenceIndex].children[lineIndex]?.getBoundingClientRect() || { top: 0, height: 0 }
+                )
+                return (
+                  <span
+                    key={`${sentenceIndex}-${lineIndex}`}
+                    className="block text-4xl font-semibold transition-all duration-300 md:text-6xl lg:text-7xl text-center leading-tight mb-2"
+                    style={{
+                      color: `rgb(255, 255, 255)`,
+                      opacity: 0.3 + (opacity * 0.7),
+                    }}
+                  >
+                    {line}
+                  </span>
+                )
+              })}
+            </div>
+          ))}
         </div>
       </ScrollArea>
     </div>
