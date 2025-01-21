@@ -8,7 +8,7 @@ import Gallery from "@/components/Gallery";
 export default function Home() {
   return (
     <div className="min-h-screen bg-black">
-      <Navbar />
+      <Navbar /><br/>
       <main className="container text-white mx-auto px-4 py-12">
         <CallToAction/>
         <Gallery/>

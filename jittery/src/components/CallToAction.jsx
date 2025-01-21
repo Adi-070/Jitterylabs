@@ -9,7 +9,7 @@ export default function CallToAction() {
   const [maxDistance, setMaxDistance] = useState(0)
 
   useEffect(() => {
-    // Set initial maxDistance
+   
     setMaxDistance(window.innerHeight / 4)
 
     const handleMouseMove = (event) => {

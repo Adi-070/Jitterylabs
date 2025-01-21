@@ -20,7 +20,7 @@ const images = [
 
 export default function Gallery() {
   return (
-    <div className="container px-4 py-12 bg-black-100">
+    <div className="container px-4 py-12 ">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-7xl mx-auto bg-black-100">
         {images.map((image, index) => (
           <Card key={index} className={`${image.className} transition-transform duration-300 hover:scale-105 bg-black-100`}>
