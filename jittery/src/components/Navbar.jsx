@@ -91,7 +91,7 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300",
+        "fixed top-0 w-full z-50 transition-all duration-300 ",
         isScrolled ? "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60" : "bg-transparent",
       )}
     >
@@ -102,11 +102,11 @@ export function Navbar() {
 
         <div
           className={cn(
-            "hidden md:flex items-center transition-opacity duration-300",
+            "hidden md:flex items-center transition-opacity duration-0",
             isScrolled ? "opacity-0" : "opacity-100",
           )}
         >
-          <NavigationMenu>
+          <NavigationMenu >
             <NavigationMenuList>
               {navigationItems.map((item) => (
                 <NavigationMenuItem key={item.href}>
