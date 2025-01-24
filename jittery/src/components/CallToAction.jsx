@@ -46,7 +46,7 @@ export default function CallToAction() {
   
 
   return (
-    <main className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center overflow-hidden">
+    <main className="min-h-screen  text-white flex flex-col items-center justify-center overflow-hidden">
       <div
         ref={containerRef}
         className="h-[300vh] flex flex-col items-center justify-start pt-[50vh]"
