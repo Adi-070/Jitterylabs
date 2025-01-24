@@ -1,87 +1,72 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import React, { useEffect, useRef, useState } from "react"
+
+const lines = [
+  "100,000,000,000",
+  "professional photos are taken every year, approximately.",
+  "But these are the photos that are going to stay with you.",
+]
 
 export default function CallToAction() {
+  const [scrollY, setScrollY] = useState(0)
   const containerRef = useRef(null)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [maxDistance, setMaxDistance] = useState(0)
 
   useEffect(() => {
-   
-    setMaxDistance(window.innerHeight / 4)
-
-    const handleMouseMove = (event) => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect()
-        setMousePosition({
-          x: event.clientX - rect.left,
-          y: event.clientY - rect.top,
-        })
-      }
+    const handleScroll = () => {
+      setScrollY(window.scrollY)
     }
 
-    const handleResize = () => {
-      setMaxDistance(window.innerHeight / 4)
-    }
+    window.addEventListener("scroll", handleScroll, { passive: true })
 
-    window.addEventListener("mousemove", handleMouseMove)
-    window.addEventListener("resize", handleResize)
-    
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove)
-      window.removeEventListener("resize", handleResize)
+      window.removeEventListener("scroll", handleScroll)
     }
   }, [])
 
-  const sentences = [
-    ["100,000,000,000", "professional photos are", "taken every year,", "approximately."],
-    ["But these are the photos", "that are going to", "stay with you."],
-  ]
-
-  const getOpacity = (lineRect) => {
-    if (maxDistance === 0) return 0.3 // Default opacity when maxDistance isn't set yet
-    const distance = Math.abs(mousePosition.y - (lineRect.top + lineRect.height / 2))
-    return Math.max(0, 1 - distance / maxDistance)
-  }
+  const calculateOpacity = (index) => {
+    if (!containerRef.current || !lines?.length) return 0.3;
+  
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const lineHeight = containerRect.height / 7;
+    const centerY = window.innerHeight / 2;
+  
+    // Calculate the Y position of the line's center
+    const linePositionY = containerRect.top + index * lineHeight + lineHeight / 2;
+    console.log(linePositionY)
+    console.log(centerY)
+  
+    // Calculate distance from the screen center
+    const distance = Math.abs(centerY - linePositionY);
+    const maxDistance = window.innerHeight / 2;
+  
+    // Return 1 when exactly at center, 0.3 otherwise
+    return distance < lineHeight / 2 ? 1 : 0.3;
+  };
+  
 
   return (
-    <div className="relative h-screen w-full overflow-hidden bg-black">
+    <main className="min-h-screen  text-white flex flex-col items-center justify-center overflow-hidden">
       <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: `url(${process.env.NEXT_PUBLIC_VERCEL_URL}/DOxkX.png)`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
-      <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/50 to-black/50" />
-      <ScrollArea className="relative z-20 h-screen">
-        <div ref={containerRef} className="flex flex-col items-center justify-center min-h-screen w-full px-4 py-20">
-          {sentences.map((sentence, sentenceIndex) => (
-            <div key={sentenceIndex} className="mb-20 last:mb-0">
-              {sentence.map((line, lineIndex) => {
-                const opacity = getOpacity(
-                  containerRef.current?.children[sentenceIndex].children[lineIndex]?.getBoundingClientRect() || { top: 0, height: 0 }
-                )
-                return (
-                  <span
-                    key={`${sentenceIndex}-${lineIndex}`}
-                    className="block text-4xl font-semibold transition-all duration-300 md:text-6xl lg:text-7xl text-center leading-tight mb-2"
-                    style={{
-                      color: `rgb(255, 255, 255)`,
-                      opacity: 0.3 + (opacity * 0.7),
-                    }}
-                  >
-                    {line}
-                  </span>
-                )
-              })}
-            </div>
-          ))}
-        </div>
-      </ScrollArea>
-    </div>
+        ref={containerRef}
+        className="h-[300vh] flex flex-col items-center justify-start pt-[50vh]"
+        style={{ transform: `translateY(${-scrollY}px)` }}
+      >
+        {lines.map((line, index) => (
+          <div
+            key={index}
+            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 text-center px-4 left-0 right-0"
+            style={{
+              opacity: calculateOpacity(index),
+              // transform: `translateY(${index * 100}vh)`,
+              transition: "opacity 0.5s ease-out",
+            }}
+          >
+            {line}
+          </div>
+        ))}
+      </div>
+    </main>
   )
 }
+
