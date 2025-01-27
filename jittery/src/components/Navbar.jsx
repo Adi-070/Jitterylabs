@@ -1,149 +1,80 @@
 "use client"
 
-import * as React from "react"
 import Link from "next/link"
-
-import { cn } from "@/lib/utils"
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { ListItem } from "./ListItem"
-
-const HamburgerIcon = ({ isOpen }) => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className="transition-transform duration-300 ease-in-out"
-  >
-    <path
-      d={isOpen ? "M6 18L18 6M6 6L18 18" : "M4 6H20M4 12H20M4 18H20"}
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="transition-all duration-300 ease-in-out"
-    />
-  </svg>
-)
+import { Apple } from "lucide-react"
 
 export function Navbar() {
-  const [isScrolled, setIsScrolled] = React.useState(false)
-  const [isSidebarOpen, setIsSidebarOpen] = React.useState(false)
-
-  React.useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0)
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  const navigationItems = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About Us" },
-    { href: "/contact", label: "Contact Us" },
-    { href: "/blog", label: "Blog" },
-  ]
-
-  const Sidebar = () => (
-    <Sheet open={isSidebarOpen} onOpenChange={setIsSidebarOpen}>
-      <SheetTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className={cn(
-            "text-white hover:bg-white/20 transition-colors duration-200",
-            isScrolled ? "md:flex" : "md:hidden",
-          )}
-        >
-          <HamburgerIcon isOpen={isSidebarOpen} />
-          <span className="sr-only">Toggle menu</span>
-        </Button>
-      </SheetTrigger>
-      <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-gradient-to-br from-purple-700 to-indigo-900">
-        <nav className="flex flex-col gap-10 mt-10">
-          {navigationItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setIsSidebarOpen(false)}
-              className="text-2xl font-medium text-white hover:text-gray-300 transition-colors duration-200"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-      </SheetContent>
-    </Sheet>
-  )
-
   return (
-    <header
-      className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300 ",
-        isScrolled ? "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60" : "bg-transparent",
-      )}
-    >
-      <div className="container mx-auto flex items-center justify-between px-4 h-16">
-        <Link href="/" className="text-xl text-white font-bold">
-          Logo
-        </Link>
+    <div className="w-full bg-black text-white">
+      {/* Top Navigation */}
+      <nav className="flex h-11 items-center justify-center px-4 text-xs font-light">
+        <div className="flex w-full max-w-[1024px] items-center justify-between gap-8">
+          <Link href="/" className="text-white hover:opacity-80">
+            <Apple className="h-5 w-5" />
+            <span className="sr-only">Apple</span>
+          </Link>
 
-        <div
-          className={cn(
-            "hidden md:flex items-center transition-opacity duration-0",
-            isScrolled ? "opacity-0" : "opacity-100",
-          )}
-        >
-          <NavigationMenu >
-            <NavigationMenuList>
-              {navigationItems.map((item) => (
-                <NavigationMenuItem key={item.href}>
-                  <Link href={item.href} legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={cn(
-                        "group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-white/20 focus:bg-white/20 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-white/20 data-[state=open]:bg-white/20",
-                        item.href === "/blog" ? "hidden" : "text-white",
-                      )}
-                    >
-                      {item.label}
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-              ))}
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white">Blog</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid gap-3 p-6 w-[400px]">
-                    <ListItem href="/blog/tech" title="Tech Blog">
-                      Latest updates in technology
-                    </ListItem>
-                    <ListItem href="/blog/design" title="Design Blog">
-                      Insights about UI/UX design
-                    </ListItem>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
+          <div className="hidden flex-1 items-center justify-center gap-8 lg:flex">
+            <Link href="/store" className="text-gray-300 hover:text-white-800 hover:opacity-80">
+              Store
+            </Link>
+            <Link href="/mac" className="text-gray-300 hover:text-white-800 hover:opacity-80">
+              Mac
+            </Link>
+            <Link href="/ipad" className="text-gray-300 hover:text-white-800 hover:opacity-80">
+              iPad
+            </Link>
+            <Link href="/iphone" className="text-gray-300 hover:text-white-800 hover:opacity-80">
+              iPhone
+            </Link>
+            <Link href="/watch" className="text-gray-300 hover:text-white-800 hover:opacity-80">
+              Watch
+            </Link>
+            <Link href="/vision" className="text-gray-300 hover:text-white-800 hover:opacity-80">
+              Vision
+            </Link>
+            <Link href="/airpods" className="text-gray-300 hover:text-white-800 hover:opacity-80">
+              AirPods
+            </Link>
+            <Link href="/tv-home" className="text-gray-300 hover:text-white-800hover:opacity-80">
+              TV
+            </Link>
+            <Link href="/entertainment" className="text-gray-300 hover:text-white-800 hover:opacity-80">
+              Entertainment
+            </Link>
+            <Link href="/accessories" className="text-gray-300 hover:text-white-800 hover:opacity-80">
+              Accessories
+            </Link>
+            <Link href="/support" className="text-gray-300 hover:text-white-800 hover:opacity-80">
+              Support
+            </Link>
+          </div>
         </div>
+      </nav>
 
-        <Sidebar />
-      </div>
-    </header>
+      {/* Sub Navigation */}
+      <nav className="flex h-12 items-center justify-center border-b border-zinc-700 px-4">
+        <div className="flex w-full max-w-[1024px] items-center justify-between">
+          <h1 className="text-xl font-semibold">AirPods Pro (2nd generation)</h1>
+
+          <div className="hidden items-center gap-8 lg:flex">
+            <Link href="/airpods-pro/overview" className="text-xs text-gray-300 hover:text-white-800 hover:opacity-80">
+              Overview
+            </Link>
+            <Link href="/airpods-pro/tech-specs" className="text-xs text-gray-300 hover:text-white-800 hover:opacity-80">
+              Tech Specs
+            </Link>
+            <Link href="/airpods-pro/compare" className="text-xs text-gray-300 hover:text-white-800 hover:opacity-80">
+              Compare
+            </Link>
+            <Button variant="default" className="rounded-full bg-blue-600 px-6 text-xs hover:bg-blue-700">
+              Buy
+            </Button>
+          </div>
+        </div>
+      </nav>
+    </div>
   )
 }
-
-export default Navbar
 

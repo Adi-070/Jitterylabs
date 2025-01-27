@@ -50,7 +50,7 @@ export default function CallToAction() {
   
 
   return (
-    <main className="min-h-screen  text-white flex flex-col items-center justify-center overflow-hidden">
+    <main className="min-h-screen text-white flex flex-col items-center justify-center overflow-hidden">
       <div
         ref={containerRef}
         className="h-[100vh] flex flex-col items-center justify-start pt-[35vh]"
@@ -59,7 +59,7 @@ export default function CallToAction() {
         {lines.map((line, index) => (
           <div
             key={index}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 text-center px-4 left-0 right-0"
+            className="text-xl md:text-7xl lg:text-7xl font-bold mb-8 text-center px-4 left-0 right-0"
             style={{
               opacity: calculateOpacity(index),
               // transform: `translateY(${index * 100}vh)`,
