@@ -53,13 +53,13 @@ export default function CallToAction() {
     <main className="min-h-screen text-white flex flex-col items-center justify-center overflow-hidden">
       <div
         ref={containerRef}
-        className="h-[100vh] flex flex-col items-center justify-start pt-[35vh]"
+        className="h-[100vh] flex flex-col items-center justify-start pt-[25vh]"
         style={{ transform: `translateY(${-scrollY}px)`}}
       >
         {lines.map((line, index) => (
           <div
             key={index}
-            className="text-xl md:text-7xl lg:text-7xl font-bold mb-8 text-center px-4 left-0 right-0"
+            className="text-8xl md:text-7xl lg:text-5xl font-bold mb-8 text-center px-4 left-0 right-0"
             style={{
               opacity: calculateOpacity(index),
               // transform: `translateY(${index * 100}vh)`,
