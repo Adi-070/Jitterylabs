@@ -59,10 +59,9 @@ export default function CallToAction() {
         {lines.map((line, index) => (
           <div
             key={index}
-            className="text-8xl md:text-7xl lg:text-5xl font-bold mb-8 text-center px-4 left-0 right-0"
+            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 text-center px-4 left-0 right-0"
             style={{
               opacity: calculateOpacity(index),
-              // transform: `translateY(${index * 100}vh)`,
               transition: "opacity 0.5s ease-out",
             }}
           >
