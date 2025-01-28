@@ -59,13 +59,13 @@ export function Navbar() {
           <h1 className="text-xl font-semibold">AirPods Pro (2nd generation)</h1>
 
           <div className="hidden items-center gap-8 lg:flex">
-            <Link href="/airpods-pro/overview" className="text-xs text-gray-300 hover:text-white-800 hover:opacity-80">
+            <Link href="/home" className="text-xs text-gray-300 hover:text-white-800 hover:opacity-80">
               Home
             </Link>
-            <Link href="/airpods-pro/tech-specs" className="text-xs text-gray-300 hover:text-white-800 hover:opacity-80">
+            <Link href="/about" className="text-xs text-gray-300 hover:text-white-800 hover:opacity-80">
               About us
             </Link>
-            <Link href="/airpods-pro/compare" className="text-xs text-gray-300 hover:text-white-800 hover:opacity-80">
+            <Link href="/contact" className="text-xs text-gray-300 hover:text-white-800 hover:opacity-80">
               Contact us
             </Link>
             <Button variant="default" className="rounded-full bg-blue-600 px-6 text-xs hover:bg-blue-700">
