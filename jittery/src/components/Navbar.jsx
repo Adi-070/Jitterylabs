@@ -15,9 +15,9 @@ function SidePanel({ isOpen, onClose }) {
         <SheetHeader>
           <SheetTitle>Menu</SheetTitle>
         </SheetHeader>
-        <nav className="flex flex-col gap-4 mt-8">
+        <nav className="flex flex-col text-white gap-4 mt-8">
           <SheetClose asChild>
-            <Link href="/home" className="text-lg hover:text-gray-600">
+            <Link href="/" className="text-lg hover:text-gray-600">
               Home
             </Link>
           </SheetClose>
@@ -47,7 +47,7 @@ function FloatingMenu({ isVisible, onClick }) {
 
   return (
     <div
-      className={`fixed top-4 right-4 z-50 transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+      className={`fixed top-4 text-white right-4 z-50 transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
     >
       <Button variant="outline" size="icon" onClick={onClick}>
         <Menu className="h-6 w-6" />
@@ -91,7 +91,7 @@ export function Navbar() {
           </Link>
 
           <div className="hidden flex-1 items-center justify-center gap-8 lg:flex">
-            <Link href="/home" className="text-gray-300 hover:text-white-800 hover:opacity-80">
+            <Link href="/" className="text-gray-300 hover:text-white-800 hover:opacity-80">
               Home
             </Link>
             <Link href="/service" className="text-gray-300 hover:text-white-800 hover:opacity-80">
