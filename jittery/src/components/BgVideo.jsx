@@ -2,33 +2,22 @@
 
 import { useRef, useEffect, useState } from "react"
 
-const BgVideo = ({textRef}) => {
+const BgVideo = ({ text }) => {
   const videoRef = useRef(null)
   const [isInViewport, setIsInViewport] = useState(true)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInViewport(entry.isIntersecting)
-      },
-      {
-        threshold: 0,
-      },
+      ([entry]) => setIsInViewport(entry.isIntersecting),
+      { threshold: 0 }
     )
 
-    if (textRef.current) {
-      observer.observe(textRef.current)
-    }
-
-    return () => {
-      if (textRef.current) {
-        observer.unobserve(textRef.current)
-      }
-    }
+    return () => observer.disconnect()
   }, [])
 
   return (
     <div className="relative min-h-screen">
+      {/* Background Video */}
       <video
         ref={videoRef}
         autoPlay
@@ -40,16 +29,17 @@ const BgVideo = ({textRef}) => {
         <source src="/background-video.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
+
+      {/* Overlay Text */}
       <div
-        ref={textRef}
-        className={`relative z-10 min-h-screen flex items-center justify-center text-white text-4xl font-bold p-8 transition-all duration-300 ${
-          isInViewport ? "bg-transparent" : "bg-black"
-        }`}
+        className={`absolute inset-0 flex items-center justify-center text-white text-4xl font-bold p-8 transition-all duration-300 ${
+          isInViewport ? "bg-transparent" : "bg-black bg-opacity-50"
+        } z-10`}
       >
+        {text}
       </div>
     </div>
   )
 }
 
 export default BgVideo
-

@@ -13,7 +13,7 @@ function SidePanel({ isOpen, onClose }) {
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Menu</SheetTitle>
+          <SheetTitle>Jittery Labs</SheetTitle>
         </SheetHeader>
         <nav className="flex flex-col text-white gap-4 mt-8">
           <SheetClose asChild>
@@ -22,8 +22,8 @@ function SidePanel({ isOpen, onClose }) {
             </Link>
           </SheetClose>
           <SheetClose asChild>
-            <Link href="/service" className="text-lg hover:text-gray-600">
-              Service
+            <Link href="/project" className="text-lg hover:text-gray-600">
+              Projects
             </Link>
           </SheetClose>
           <SheetClose asChild>
@@ -82,6 +82,9 @@ export function Navbar() {
   return (
     <>
     <div className="w-full bg-black text-white border-b-2 border-white">
+      <div className="flex text-[30px] font-bold items-center justify-center mt-3">
+        Jittery Labs
+      </div>
       {/* Top Navigation */}
       <nav className="flex h-11 items-center justify-center px-4 text-xs font-light">
         <div className="flex w-full max-w-[1024px] items-center justify-between gap-8">
@@ -94,8 +97,8 @@ export function Navbar() {
             <Link href="/" className="text-gray-300 hover:text-white-800 hover:opacity-80">
               Home
             </Link>
-            <Link href="/service" className="text-gray-300 hover:text-white-800 hover:opacity-80">
-              Service
+            <Link href="/project" className="text-gray-300 hover:text-white-800 hover:opacity-80">
+              Projects
             </Link>
             <Link href="/about" className="text-gray-300 hover:text-white-800 hover:opacity-80">
               About us
