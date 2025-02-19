@@ -81,7 +81,7 @@ export function Navbar() {
   }, [lastScrollY])
   return (
     <>
-    <div className="w-full bg-black text-white border-b-2 border-white">
+    <div className="relative w-full bg-black text-white border-b-2 border-white z-10">
       <div className="flex text-[30px] font-bold items-center justify-center mt-3">
         Jittery Labs
       </div>
@@ -94,16 +94,16 @@ export function Navbar() {
           </Link>
 
           <div className="hidden flex-1 items-center justify-center gap-8 lg:flex">
-            <Link href="/" className="text-gray-300 hover:text-white-800 hover:opacity-80">
+            <Link href="/" className="text-gray-300 hover:text-white hover:opacity-80">
               Home
             </Link>
-            <Link href="/project" className="text-gray-300 hover:text-white-800 hover:opacity-80">
+            <Link href="/project" className="text-gray-300 hover:text-white hover:opacity-80">
               Projects
             </Link>
-            <Link href="/about" className="text-gray-300 hover:text-white-800 hover:opacity-80">
+            <Link href="/about" className="text-gray-300 hover:text-white hover:opacity-80">
               About us
             </Link>
-            <Link href="/blog" className="text-gray-300 hover:text-white-800 hover:opacity-80">
+            <Link href="/blog" className="text-gray-300 hover:text-white hover:opacity-80">
               Blogs
             </Link>
           </div>

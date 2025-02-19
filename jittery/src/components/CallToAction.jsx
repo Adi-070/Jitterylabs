@@ -114,7 +114,7 @@ export default function CallToAction() {
         loop
         muted
         playsInline
-        className={`fixed top-0 left-0 w-full h-full object-cover transition-opacity duration-500 ${isLine3Visible ? "opacity-100" : "opacity-0"}`}
+        className={`fixed top-0 left-0 w-full h-full transition-opacity duration-500 z-0 ${isLine3Visible ? "opacity-100" : "opacity-0"}`}
       >
         <source src="/background-video.mp4" type="video/mp4" />
         Your browser does not support the video tag.
@@ -164,7 +164,7 @@ export default function CallToAction() {
         loop
         muted
         playsInline
-        className={`fixed top-0 left-0 w-full h-full object-cover transition-opacity duration-500 ${isLine3Exited && isNextDivVisible ? "opacity-100" : "opacity-0"}`}
+        className={`fixed top-0 left-0 w-full h-full transition-opacity duration-500 z-0 ${isLine3Exited && isNextDivVisible ? "opacity-100" : "opacity-0"}`}
       >
         <source src="/scroll-video.mp4" type="video/mp4" />
         Your browser does not support the video tag.
