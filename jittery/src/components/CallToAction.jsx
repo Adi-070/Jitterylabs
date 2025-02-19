@@ -17,6 +17,10 @@ export default function CallToAction() {
   const nextDivRef = useRef(null)
   const count = useNumberAnimation()
   const videoRef = useRef(null)
+  const [isNextDivVisible, setIsNextDivVisible] = useState(false)
+  const [isNextDivExited, setIsNextDivExited] = useState(false)
+  const nextVideoRef = useRef(null)
+
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -42,15 +46,46 @@ export default function CallToAction() {
     return () => observer.disconnect()
   }, [])
 
+
+  useEffect(() => {
+    if (!nextDivRef.current) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsNextDivVisible(entry.isIntersecting)
+        if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+          setIsNextDivExited(true)
+        }
+      },
+      { threshold: [0, 1] },
+    )
+
+    observer.observe(nextDivRef.current)
+    return () => observer.disconnect()
+  }, [])
+
   useEffect(() => {
     if (videoRef.current) {
       if (isLine3Visible) {
-        videoRef.current.play()
+        videoRef.current.play().catch(error => console.error("Video play error:", error));
       } else {
-        videoRef.current.pause()
+        videoRef.current.pause();
       }
     }
-  }, [isLine3Visible])
+  }, [isLine3Visible]);
+  
+  useEffect(() => {
+    if (nextVideoRef.current) {
+      if (isLine3Exited && isNextDivVisible) {
+        nextVideoRef.current.play().catch(error => console.error("Next video play error:", error));
+      } else {
+        nextVideoRef.current.pause();
+      }
+    }
+  }, [isLine3Exited, isNextDivVisible]);
+
+
+
 
   const calculateOpacity = (index) => {
     if (!containerRef1.current) return index === 0 ? 1 : 0.3
@@ -123,6 +158,19 @@ export default function CallToAction() {
           {line3}
         </div>
       </div>
+      {/* Second Video */}
+      <video
+        ref={nextVideoRef}
+        loop
+        muted
+        playsInline
+        className={`fixed top-0 left-0 w-full h-full object-cover transition-opacity duration-500 ${isLine3Exited && isNextDivVisible ? "opacity-100" : "opacity-0"}`}
+      >
+        <source src="/scroll-video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      <div ref={nextDivRef} className="h-[10vh] bg-black w-full mt-[30vh] mb-[90vh]"></div>
     </main>
   )
 }
