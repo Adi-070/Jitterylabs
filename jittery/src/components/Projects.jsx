@@ -6,7 +6,7 @@ export default function Projects() {
     ];
   
     return (
-      <div className="min-h-screen bg-gray-900 text-white p-8 flex flex-col items-center">
+      <div className="min-h-screen bg-black text-white p-8 flex flex-col items-center">
         <h1 className="text-4xl font-bold mb-6 text-center">My Projects</h1>
         <div className="w-full max-w-2xl space-y-6">
           {projects.map((project, index) => (
