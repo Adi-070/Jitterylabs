@@ -66,23 +66,23 @@ export default function CallToAction() {
 
   useEffect(() => {
     if (videoRef.current) {
-      if (isLine3Visible) {
+      if (isLine3Visible && isNextDivExited) {
         videoRef.current.play().catch(error => console.error("Video play error:", error));
       } else {
         videoRef.current.pause();
       }
     }
-  }, [isLine3Visible]);
+  }, [isLine3Visible, isNextDivExited]);
   
   useEffect(() => {
     if (nextVideoRef.current) {
-      if (isLine3Exited && isNextDivVisible) {
+      if (isNextDivVisible) {
         nextVideoRef.current.play().catch(error => console.error("Next video play error:", error));
       } else {
         nextVideoRef.current.pause();
       }
     }
-  }, [isLine3Exited, isNextDivVisible]);
+  }, [isNextDivVisible]);
 
 
 
@@ -143,6 +143,20 @@ export default function CallToAction() {
         </div>
       </div>
 
+      {/* Second Video */}
+      <video
+        ref={nextVideoRef}
+        loop
+        muted
+        playsInline
+        className={`fixed top-0 left-0 w-full h-full transition-opacity duration-500 z-0 ${isLine3Exited && isNextDivVisible ? "opacity-100" : "opacity-0"}`}
+      >
+        <source src="/scroll-video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      <div ref={nextDivRef} className="h-[10vh] bg-black w-full mt-[30vh] mb-[90vh]"></div>
+
       {/* Line 3 */}
       <div ref={containerRef3} 
       className="relative w-full flex flex-col items-center justify-center z-10 transition-all duration-500 mb-[80vh]"
@@ -158,19 +172,7 @@ export default function CallToAction() {
           {line3}
         </div>
       </div>
-      {/* Second Video */}
-      <video
-        ref={nextVideoRef}
-        loop
-        muted
-        playsInline
-        className={`fixed top-0 left-0 w-full h-full transition-opacity duration-500 z-0 ${isLine3Exited && isNextDivVisible ? "opacity-100" : "opacity-0"}`}
-      >
-        <source src="/scroll-video.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-
-      <div ref={nextDivRef} className="h-[10vh] bg-black w-full mt-[30vh] mb-[90vh]"></div>
+      
     </main>
   )
 }
