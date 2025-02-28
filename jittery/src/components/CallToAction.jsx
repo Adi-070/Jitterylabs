@@ -20,7 +20,7 @@ export default function CallToAction() {
   const [isNextDivVisible, setIsNextDivVisible] = useState(false)
   const [isNextDivExited, setIsNextDivExited] = useState(false)
   const nextVideoRef = useRef(null)
-
+  const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -74,18 +74,71 @@ export default function CallToAction() {
     }
   }, [isLine3Visible, isNextDivExited]);
   
+  // useEffect(() => {
+  //   if (nextVideoRef.current) {
+  //     if (isNextDivVisible) {
+  //       nextVideoRef.current.play().catch(error => console.error("Next video play error:", error));
+  //     } else {
+  //       nextVideoRef.current.pause();
+  //     }
+  //   }
+  // }, [isNextDivVisible]);
+
   useEffect(() => {
-    if (nextVideoRef.current) {
-      if (isNextDivVisible) {
-        nextVideoRef.current.play().catch(error => console.error("Next video play error:", error));
-      } else {
-        nextVideoRef.current.pause();
+    const video = nextVideoRef.current
+    const container = nextDivRef.current
+
+    if (!video || !container) return
+
+    // Set up Intersection Observer to detect when the container is in view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries
+        setIsNextDivVisible(entry.isIntersecting)
+      },
+      { threshold: 0.1 }, // Trigger when at least 10% of the element is visible
+    )
+
+    observer.observe(container)
+
+    // Function to update video progress based on scroll position
+    const handleScroll = () => {
+      if (!container) return
+
+      // Get the container's position relative to the viewport
+      const rect = container.getBoundingClientRect()
+
+      // Calculate how far the container is through the viewport
+      // Start when the bottom of the container enters the viewport (rect.top <= window.innerHeight)
+      // End when the top of the container leaves the viewport (rect.bottom <= 0)
+      const start = window.innerHeight
+      const end = 0 - rect.height
+      const current = rect.top
+
+      // Calculate progress (0 to 1)
+      const progress = 1 - (current - end) / (start - end)
+      const clampedProgress = Math.max(0, Math.min(1, progress))
+
+      setScrollProgress(clampedProgress)
+
+      // Update video currentTime based on scroll progress
+      if (video && video.duration) {
+        video.currentTime = video.duration * clampedProgress
       }
     }
-  }, [isNextDivVisible]);
 
+    // Add scroll event listener
+    window.addEventListener("scroll", handleScroll)
 
+    // Initial call to set correct position
+    handleScroll()
 
+    // Clean up
+    return () => {
+      observer.disconnect()
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
 
   const calculateOpacity = (index) => {
     if (!containerRef1.current) return index === 0 ? 1 : 0.3
@@ -149,13 +202,13 @@ export default function CallToAction() {
         loop
         muted
         playsInline
-        className={`fixed top-0 left-0 w-full h-full transition-opacity duration-500 z-0 ${isLine3Exited && isNextDivVisible ? "opacity-100" : "opacity-0"}`}
+        className={`fixed top-0 left-0 w-full h-full transition-opacity duration-500 z-0 ${isNextDivVisible ? "opacity-100" : "opacity-0"}`}
       >
         <source src="/scroll-video.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
-      <div ref={nextDivRef} className="h-[10vh] bg-black w-full mt-[30vh] mb-[90vh]"></div>
+      <div ref={nextDivRef} className="h-[600vh] bg-black w-full mt-[30vh] mb-[90vh]"></div>
 
       {/* Line 3 */}
       <div ref={containerRef3} 
