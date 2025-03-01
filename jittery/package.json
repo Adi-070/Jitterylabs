@@ -1,6 +1,7 @@
 {
   "name": "jittery",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
     "@radix-ui/react-dialog": "^1.1.4",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-navigation-menu": "^1.2.3",
@@ -25,7 +27,7 @@
     "google-spreadsheet": "^4.1.4",
     "gsap": "^3.12.7",
     "lucide-react": "^0.473.0",
-    "next": "15.1.5",
+    "next": "^15.2.0",
     "react": "^18.2.0",
     "react-datepicker": "^8.0.0",
     "react-day-picker": "^8.10.1",

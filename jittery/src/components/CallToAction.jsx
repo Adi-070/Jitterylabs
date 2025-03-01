@@ -3,6 +3,11 @@
 import { useEffect, useRef, useState } from "react"
 import useNumberAnimation from "./NumberCounter"
 
+import ScrolledControlledVideo from "./ScrolledControlledVideo.mjs";
+
+// Register GSAP plugins
+// gsap.registerPlugin(ScrollTrigger);
+
 const line1 = ["100,000,000,000"]
 const line2 = ["professional photos are taken every year, approximately."]
 const line3 = ["But these are the photos that are going to stay with you."]
@@ -21,6 +26,11 @@ export default function CallToAction() {
   const [isNextDivExited, setIsNextDivExited] = useState(false)
   const nextVideoRef = useRef(null)
   const [scrollProgress, setScrollProgress] = useState(0)
+  // Add a ref to track the target video time
+  const targetTimeRef = useRef(0)
+  // Add a ref to track if the video is loaded
+  const videoLoadedRef = useRef(false)
+  const scrollTriggerRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -84,61 +94,206 @@ export default function CallToAction() {
   //   }
   // }, [isNextDivVisible]);
 
-  useEffect(() => {
-    const video = nextVideoRef.current
-    const container = nextDivRef.current
+  // useEffect(() => {
+  //   const video = nextVideoRef.current
+  //   const container = nextDivRef.current
 
-    if (!video || !container) return
+  //   if (!video || !container) return
 
-    // Set up Intersection Observer to detect when the container is in view
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries
-        setIsNextDivVisible(entry.isIntersecting)
-      },
-      { threshold: 0.1 }, // Trigger when at least 10% of the element is visible
-    )
+  //   // Preload the video
+  //   video.preload = "auto"
 
-    observer.observe(container)
+  //   // Track when video is loaded
+  //   const handleVideoLoaded = () => {
+  //     videoLoadedRef.current = true
+  //   }
 
-    // Function to update video progress based on scroll position
-    const handleScroll = () => {
-      if (!container) return
+  //   video.addEventListener("loadeddata", handleVideoLoaded)
 
-      // Get the container's position relative to the viewport
-      const rect = container.getBoundingClientRect()
+  //   if (video) {
+  //     video.style.transform = 'translateZ(0)'; // Force GPU acceleration
+  //     video.style.willChange = 'contents'; // Hint to the browser
+  //   }
+    
 
-      // Calculate how far the container is through the viewport
-      // Start when the bottom of the container enters the viewport (rect.top <= window.innerHeight)
-      // End when the top of the container leaves the viewport (rect.bottom <= 0)
-      const start = window.innerHeight
-      const end = 0 - rect.height
-      const current = rect.top
+  //   // Set up Intersection Observer to detect when the container is in view
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       const [entry] = entries
+  //       setIsNextDivVisible(entry.isIntersecting)
+  //     },
+  //     {
+  //       threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+  //       rootMargin: "20% 0px",
+  //     },
+  //   )
 
-      // Calculate progress (0 to 1)
-      const progress = 1 - (current - end) / (start - end)
-      const clampedProgress = Math.max(0, Math.min(1, progress))
+  //   observer.observe(container)
 
-      setScrollProgress(clampedProgress)
+  //   let animationFrameId= null
+  //   const lastProgress = 0
+  //   const SMOOTHING_FACTOR = 0.15 // Lower for smoother but slower transitions
 
-      // Update video currentTime based on scroll progress
-      if (video && video.duration) {
-        video.currentTime = video.duration * clampedProgress
-      }
-    }
+  //   // Function to update video progress based on scroll position
+  //   const handleScroll = () => {
+  //     if (!container) return
 
-    // Add scroll event listener
-    window.addEventListener("scroll", handleScroll)
+  //     if (animationFrameId) {
+  //       cancelAnimationFrame(animationFrameId)
+  //     }
 
-    // Initial call to set correct position
-    handleScroll()
+  //     animationFrameId = requestAnimationFrame(() => {
+  //       const rect = container.getBoundingClientRect()
 
-    // Clean up
-    return () => {
-      observer.disconnect()
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
+  //       // Calculate progress (0 to 1)
+  //       const start = window.innerHeight
+  //       const end = 0 - rect.height
+  //       const current = rect.top
+  //       const progress = 1 - (current - end) / (start - end)
+  //       const clampedProgress = Math.max(0, Math.min(1, progress))
+  //       // const clampedProgress = Math.min(1, progress)
+
+  //       // Store the target time based on progress
+  //       if (video && video.duration) {
+  //         targetTimeRef.current = video.duration * clampedProgress
+  //       }
+
+  //       setScrollProgress(clampedProgress)
+  //     })
+  //   }
+
+  //   // Separate animation loop for smoother video updates
+  //   const updateVideoTime = () => {
+  //     if (video && videoLoadedRef.current) {
+  //       // Apply smoothing between current time and target time
+  //       const currentTime = video.currentTime
+  //       const targetTime = targetTimeRef.current
+
+  //       video.currentTime = currentTime + (targetTime - currentTime) 
+
+  //       // Only update if the difference is significant enough
+  //       // if (Math.abs(currentTime - targetTime) > 0) {
+  //       //   // Interpolate between current and target time for smoothness
+  //       //   video.currentTime = currentTime + (targetTime - currentTime) * SMOOTHING_FACTOR
+  //       // }
+  //     }
+
+  //     // Continue the animation loop
+  //     requestAnimationFrame(updateVideoTime)
+  //   }
+
+  //   // Start the animation loop
+  //   const animationLoop = requestAnimationFrame(updateVideoTime)
+
+  //   // Add optimized scroll event listener
+  //   window.addEventListener("scroll", handleScroll, { passive: true })
+
+  //   // Initial call to set correct position
+  //   handleScroll()
+
+  //   // Clean up
+  //   return () => {
+  //     observer.disconnect()
+  //     window.removeEventListener("scroll", handleScroll)
+  //     video.removeEventListener("loadeddata", handleVideoLoaded)
+  //     if (animationFrameId) cancelAnimationFrame(animationFrameId)
+  //     cancelAnimationFrame(animationLoop)
+  //   }
+  // }, [])
+
+  // useEffect(() => {
+  //   const video = nextVideoRef.current;
+  //   const container = nextDivRef.current;
+    
+  //   if (!video || !container) return;
+    
+  //   // Preload the video
+  //   video.preload = "auto";
+    
+  //   // Track when video is loaded
+  //   const handleVideoLoaded = () => {
+  //     videoLoadedRef.current = true;
+  //     console.log('Video loaded and ready');
+      
+  //     // Initialize ScrollTrigger after video is loaded
+  //     initScrollTrigger();
+  //   };
+    
+  //   // Apply performance optimizations
+  //   if (video) {
+  //     video.style.transform = 'translateZ(0)'; // Force GPU acceleration
+  //     video.style.willChange = 'contents'; // Hint to the browser
+  //   }
+    
+  //   // Set up Intersection Observer to detect when the container is in view
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       const [entry] = entries;
+  //       setIsNextDivVisible(entry.isIntersecting);
+  //     },
+  //     {
+  //       threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+  //       rootMargin: "20% 0px",
+  //     }
+  //   );
+    
+  //   observer.observe(container);
+    
+  //   // Initialize GSAP ScrollTrigger
+  //   const initScrollTrigger = () => {
+  //     // Kill any existing ScrollTrigger instances
+  //     if (scrollTriggerRef.current) {
+  //       scrollTriggerRef.current.kill();
+  //     }
+      
+  //     // Create new ScrollTrigger
+  //     scrollTriggerRef.current = ScrollTrigger.create({
+  //       trigger: container,
+  //       start: 'top bottom', // start when top of container hits bottom of viewport
+  //       end: 'bottom top',   // end when bottom of container hits top of viewport
+  //       scrub: 0.5,          // smooth scrubbing with 0.5s lag
+  //       markers: false,      // helpful for debugging
+  //       onUpdate: (self) => {
+  //         // Update scroll progress state
+  //         setScrollProgress(self.progress);
+          
+  //         // Update video time based on scroll progress
+  //         if (video && videoLoadedRef.current && video.duration) {
+  //           const targetTime = video.duration * self.progress;
+  //           video.currentTime = targetTime;
+  //         }
+  //       },
+  //       onEnter: () => setIsNextDivVisible(true),
+  //       onLeave: () => setIsNextDivVisible(false),
+  //       onEnterBack: () => setIsNextDivVisible(true),
+  //       onLeaveBack: () => setIsNextDivVisible(false),
+  //     });
+      
+  //     console.log('ScrollTrigger initialized');
+  //   };
+    
+  //   // Add event listener for video loaded
+  //   video.addEventListener("loadeddata", handleVideoLoaded);
+    
+  //   // If video is already loaded, initialize ScrollTrigger right away
+  //   if (video.readyState >= 3) {
+  //     videoLoadedRef.current = true;
+  //     initScrollTrigger();
+  //   }
+    
+  //   // Clean up
+  //   return () => {
+  //     observer.disconnect();
+  //     video.removeEventListener("loadeddata", handleVideoLoaded);
+      
+  //     // Kill ScrollTrigger instance
+  //     if (scrollTriggerRef.current) {
+  //       scrollTriggerRef.current.kill();
+  //     }
+  //   };
+  // }, []);
+
+
 
   const calculateOpacity = (index) => {
     if (!containerRef1.current) return index === 0 ? 1 : 0.3
@@ -197,18 +352,18 @@ export default function CallToAction() {
       </div>
 
       {/* Second Video */}
-      <video
+      {/* <video
         ref={nextVideoRef}
         loop
         muted
         playsInline
-        className={`fixed top-0 left-0 w-full h-full transition-opacity duration-500 z-0 ${isNextDivVisible ? "opacity-100" : "opacity-0"}`}
+        className={`fixed top-0 left-0 w-full h-full transition-opacity aspect-[21/9] duration-500 z-0 ${isNextDivVisible ? "opacity-100" : "opacity-0"}`}
       >
         <source src="/scroll-video.mp4" type="video/mp4" />
         Your browser does not support the video tag.
-      </video>
+      </video> */}
 
-      <div ref={nextDivRef} className="h-[600vh] bg-black w-full mt-[30vh] mb-[90vh]"></div>
+      <div ref={nextDivRef} className="h-[200vh] bg-black w-full mt-[30vh] mb-[90vh] aspect-[21/9]"><ScrolledControlledVideo/></div>
 
       {/* Line 3 */}
       <div ref={containerRef3} 
