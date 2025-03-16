@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import useNumberAnimation from "./NumberCounter"
+import ScrollControlledVideo from "./ScrolledControlledVideo"
 
 const line1 = ["100,000,000,000"]
 const line2 = ["professional photos are taken every year, approximately."]
@@ -84,61 +85,66 @@ export default function CallToAction() {
   //   }
   // }, [isNextDivVisible]);
 
-  useEffect(() => {
-    const video = nextVideoRef.current
-    const container = nextDivRef.current
+  // useEffect(() => {
+  //   const video = nextVideoRef.current
+  //   const container = nextDivRef.current
 
-    if (!video || !container) return
+  //   if (!video || !container) return
 
-    // Set up Intersection Observer to detect when the container is in view
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries
-        setIsNextDivVisible(entry.isIntersecting)
-      },
-      { threshold: 0.1 }, // Trigger when at least 10% of the element is visible
-    )
+  //   video.preload = "metadata"
+  //   video.muted = true
+  //   video.defaultPlaybackRate = 0.95
+  //   video.playbackRate = 0.95
+  //   video.style.transform = 'translateZ(0)'
+  //   video.style.willChange = 'contents'
 
-    observer.observe(container)
+  //   // Set up Intersection Observer to detect when the container is in view
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       const [entry] = entries
+  //       setIsNextDivVisible(entry.isIntersecting)
+  //     }// Trigger when at least 10% of the element is visible
+  //   )
 
-    // Function to update video progress based on scroll position
-    const handleScroll = () => {
-      if (!container) return
+  //   observer.observe(container)
 
-      // Get the container's position relative to the viewport
-      const rect = container.getBoundingClientRect()
+  //   // Function to update video progress based on scroll position
+  //   const handleScroll = () => {
+  //     if (!container) return
 
-      // Calculate how far the container is through the viewport
-      // Start when the bottom of the container enters the viewport (rect.top <= window.innerHeight)
-      // End when the top of the container leaves the viewport (rect.bottom <= 0)
-      const start = window.innerHeight
-      const end = 0 - rect.height
-      const current = rect.top
+  //     // Get the container's position relative to the viewport
+  //     const rect = container.getBoundingClientRect()
 
-      // Calculate progress (0 to 1)
-      const progress = 1 - (current - end) / (start - end)
-      const clampedProgress = Math.max(0, Math.min(1, progress))
+  //     // Calculate how far the container is through the viewport
+  //     // Start when the bottom of the container enters the viewport (rect.top <= window.innerHeight)
+  //     // End when the top of the container leaves the viewport (rect.bottom <= 0)
+  //     const start = window.innerHeight
+  //     const end = 0 - rect.height
+  //     const current = rect.top
 
-      setScrollProgress(clampedProgress)
+  //     // Calculate progress (0 to 1)
+  //     const progress = 1 - (current - end) / (start - end)
+  //     const clampedProgress = Math.max(0, Math.min(1, progress))
 
-      // Update video currentTime based on scroll progress
-      if (video && video.duration) {
-        video.currentTime = video.duration * clampedProgress
-      }
-    }
+  //     setScrollProgress(clampedProgress)
 
-    // Add scroll event listener
-    window.addEventListener("scroll", handleScroll)
+  //     // Update video currentTime based on scroll progress
+  //     if (video && video.duration) {
+  //       video.currentTime = video.duration * clampedProgress
+  //     }
+  //   }
 
-    // Initial call to set correct position
-    handleScroll()
+  //   // Add scroll event listener
+  //   window.addEventListener("scroll", handleScroll)
 
-    // Clean up
-    return () => {
-      observer.disconnect()
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
+  //   // Initial call to set correct position
+  //   handleScroll()
+  //   // Clean up
+  //   return () => {
+  //     observer.disconnect()
+  //     window.removeEventListener("scroll", handleScroll)
+  //   }
+  // }, [])
 
   const calculateOpacity = (index) => {
     if (!containerRef1.current) return index === 0 ? 1 : 0.3
@@ -197,7 +203,7 @@ export default function CallToAction() {
       </div>
 
       {/* Second Video */}
-      <video
+      {/* <video
         ref={nextVideoRef}
         loop
         muted
@@ -206,9 +212,9 @@ export default function CallToAction() {
       >
         <source src="/scroll-video.mp4" type="video/mp4" />
         Your browser does not support the video tag.
-      </video>
+      </video> */}
 
-      <div ref={nextDivRef} className="h-[600vh] bg-black w-full mt-[30vh] mb-[90vh]"></div>
+      <div ref={nextDivRef} className={`h-[600vh] bg-black w-full mb-[90vh] ${isNextDivVisible?"opacity-100":"opacity-0"}`}><ScrollControlledVideo/></div>
 
       {/* Line 3 */}
       <div ref={containerRef3} 
