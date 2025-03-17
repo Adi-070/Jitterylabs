@@ -71,7 +71,7 @@ export default function Projects() {
         {projects.map((project, index) => (
           <div key={project.documentId || `mock-${index}`} className="bg-gray-800 p-6 rounded-xl shadow-lg">
             <h2 className="text-2xl font-semibold mb-4 text-center">{project.title}</h2>
-            <div className="w-full h-[400px] lg:h-[500px]">
+            <div className="w-full h-[400px] lg:h-[500px] overflow-hidden transition-transform duration-300 ease-in-out transform group hover:scale-105">
               <VideoFrame videoId={project.videoId} />
             </div>
           </div>
