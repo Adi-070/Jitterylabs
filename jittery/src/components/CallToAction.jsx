@@ -179,10 +179,10 @@ export default function CallToAction() {
         Your browser does not support the video tag.
       </video>
 
-      <div className="h-[135vh] relative z-10">
+      <div className="h-[135vh] relative z-0">
         <div
           ref={containerRef1}
-          className="flex flex-col items-center justify-start sticky top-0 text-7xl md:text-8xl lg:text-9xl font-bold mb-8 
+          className="flex flex-col items-center justify-start sticky top-0 text-[2.75rem] md:text-8xl lg:text-[14rem] font-bold mb-8 
         text-center px-4 left-0 right-0 transition-all duration-500"
           style={{
             opacity: calculateOpacity(0),
@@ -192,7 +192,7 @@ export default function CallToAction() {
         </div>
         <div
           ref={containerRef2}
-          className="flex flex-col items-center justify-start text-3xl md:text-3xl lg:text-4xl font-semibold mb-8 
+          className="flex flex-col items-center justify-center text-2xl md:text-3xl lg:text-4xl font-semibold mb-8 ml-8 sm:ml-0
       transition-all duration-500 mt-[100px]"
           style={{
             opacity: calculateOpacity(1),
@@ -214,16 +214,16 @@ export default function CallToAction() {
         Your browser does not support the video tag.
       </video> */}
 
-      <div ref={nextDivRef} className={`h-[600vh] bg-black w-full mb-[90vh] ${isNextDivVisible?"opacity-100":"opacity-0"}`}><ScrollControlledVideo/></div>
+      <div ref={nextDivRef} className={`z-10 h-[600vh] bg-black w-full mb-[90vh] ${isNextDivVisible?"opacity-100":"opacity-0"}`}><ScrollControlledVideo/></div>
 
       {/* Line 3 */}
       <div ref={containerRef3} 
-      className="relative w-full flex flex-col items-center justify-center z-10 transition-all duration-500 mb-[80vh]"
+      className="relative w-full flex flex-col items-center justify-center z-10 transition-all duration-100 mb-[80vh]"
       style={{
         opacity: calculateOpacity(2),
       }}>
         <div
-          className=" flex flex-col items-center justify-start text-3xl md:text-4xl lg:text-5xl font-semibold mb-8 transition-all duration-500"
+          className=" flex flex-col items-center justify-start text-3xl md:text-4xl lg:text-5xl font-semibold mb-8 transition-all duration-100"
           style={{
             opacity: calculateOpacity(2),
           }}
