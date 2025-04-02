@@ -66,9 +66,9 @@ export function Navbar() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
 
-      if (currentScrollY > lastScrollY && currentScrollY > 50) {
+      if (currentScrollY > lastScrollY && currentScrollY > 85) {
         setIsNavbarVisible(false)
-      } else if (currentScrollY < 50) {
+      } else if (currentScrollY < 85) {
         setIsNavbarVisible(true)
       }
 

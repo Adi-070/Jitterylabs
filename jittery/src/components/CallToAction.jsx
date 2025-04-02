@@ -22,6 +22,16 @@ export default function CallToAction() {
   const [isNextDivExited, setIsNextDivExited] = useState(false)
   const nextVideoRef = useRef(null)
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [fontSize, setFontSize] = useState("14vw");
+
+  useEffect(() => {
+    const updateFontSize = () => {
+      setFontSize(`${window.innerWidth / 9.5}px`);
+    };
+    window.addEventListener("resize", updateFontSize);
+    updateFontSize();
+    return () => window.removeEventListener("resize", updateFontSize);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -166,7 +176,7 @@ export default function CallToAction() {
   }
 
   return (
-    <main className="min-h-[100vh] text-white flex flex-col items-center justify-start pt-[30vh] overflow-hidden">
+    <main className="min-h-[100vh] text-white flex flex-col items-center justify-center pt-[30vh] overflow-hidden">
       {/* Full-screen video */}
       <video
         ref={videoRef}
@@ -179,21 +189,22 @@ export default function CallToAction() {
         Your browser does not support the video tag.
       </video>
 
-      <div className="h-[135vh] relative z-0">
+      <div className="h-[135vh] relative z-0 ">
         <div
           ref={containerRef1}
-          className="flex flex-col items-center justify-start sticky top-0 text-[2.75rem] md:text-8xl lg:text-[14rem] font-bold mb-8 
+          className="flex flex-col items-center justify-center sticky top-0 font-bold mb-8
         text-center px-4 left-0 right-0 transition-all duration-500"
           style={{
             opacity: calculateOpacity(0),
+            fontSize
           }}
         >
           {count}
         </div>
         <div
           ref={containerRef2}
-          className="flex flex-col items-center justify-center text-2xl md:text-3xl lg:text-4xl font-semibold mb-8 ml-8 sm:ml-0
-      transition-all duration-500 mt-[100px]"
+          className="flex flex-col items-center justify-center text-2xl md:text-3xl lg:text-4xl font-semibold mb-8
+      transition-all duration-500 mt-[100px] text-center"
           style={{
             opacity: calculateOpacity(1),
           }}
