@@ -27,6 +27,11 @@ function SidePanel({ isOpen, onClose }) {
             </Link>
           </SheetClose>
           <SheetClose asChild>
+            <Link href="/service" className="text-lg hover:text-gray-600">
+              Services
+            </Link>
+          </SheetClose>
+          <SheetClose asChild>
             <Link href="/about" className="text-lg hover:text-gray-600">
               About us
             </Link>
@@ -81,7 +86,7 @@ export function Navbar() {
   }, [lastScrollY])
   return (
     <>
-    <div className="relative w-full bg-black text-white border-b-2 border-white z-10">
+    <div className="relative w-full bg-black text-white border-b-2 border-white z-20">
       <div className="flex text-[30px] font-bold items-center justify-center mt-3">
         Jittery Labs
       </div>
@@ -99,6 +104,9 @@ export function Navbar() {
             </Link>
             <Link href="/project" className="text-gray-300 hover:text-white hover:opacity-80">
               Projects
+            </Link>
+            <Link href="/service" className="text-gray-300 hover:text-white hover:opacity-80">
+              Services
             </Link>
             <Link href="/about" className="text-gray-300 hover:text-white hover:opacity-80">
               About us
