@@ -1,5 +1,4 @@
 "use client"
-
 import { useEffect, useState } from "react"
 import Masonry from "react-masonry-css"
 import { Card, CardContent } from "@/components/ui/card"
@@ -14,12 +13,13 @@ export default function Gallery() {
           "http://localhost:1337/api/galleries?populate=*",
         )
         const data = await response.json()
+        
         const formattedImages = data.data.map((item) => ({
-          src: `http://localhost:1337${item.pic.formats.thumbnail.url}`,
-          alt: item.pic.alternativeText || `Image ${item.id}`,
-          text: item.text, // Add text property for hover
-          width: item.pic.width,
-          height: item.pic.height,
+          src: item.homepage_picture.formats.medium.url,
+          alt: item.homepage_picture.alternativeText || `Image ${item.id}`,
+          text: item.hovering_text,
+          width: item.homepage_picture.formats.medium.width,
+          height: item.homepage_picture.formats.medium.height,
         }))
         setImages(formattedImages)
       } catch (error) {
@@ -44,23 +44,20 @@ export default function Gallery() {
       >
         {images.length > 0 ? (
           images.map((image, index) => (
-            <div key={index} className="relative group p-2">
-              <Card className="overflow-hidden bg-black-100">
-                <CardContent className="p-0 relative">
-                  <img
-                    src={image.src || "/placeholder.svg"}
-                    alt={image.alt || "Gallery Image"}
-                    className="w-full h-auto object-cover rounded-lg transition-opacity duration-300 group-hover:opacity-90"
-                    style={{
-                      aspectRatio: `${image.width} / ${image.height}`,
-                    }}
-                  />
-                  {/* Text overlay */}
-                  <div className="absolute inset-0 bg-black bg-opacity-50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <p className="text-lg font-medium">{image.text}</p>
-                  </div>
-                </CardContent>
-              </Card>
+            <div key={index} className="w-full mb-6">
+              <div className="relative w-full overflow-hidden rounded-lg group">
+                <img
+                  src={image.src || "/placeholder.svg"}
+                  alt={image.alt || "Gallery Image"}
+                  className="w-full h-auto object-cover transition-all duration-300 group-hover:opacity-90"
+                  style={{
+                    aspectRatio: `${image.width} / ${image.height}`,
+                  }}
+                />
+                <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer">
+                  <p className="text-lg font-medium px-4 text-center text-white">{image.text}</p>
+                </div>
+              </div>
             </div>
           ))
         ) : (
