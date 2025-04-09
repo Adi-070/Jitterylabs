@@ -10,7 +10,7 @@ export default function Gallery() {
     const fetchGallery = async () => {
       try {
         const response = await fetch(
-          "http://localhost:1337/api/galleries?populate=*",
+          "https://backend-jittery.onrender.com/api/galleries?populate=*",
         )
         const data = await response.json()
         
