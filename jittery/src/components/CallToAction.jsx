@@ -225,7 +225,8 @@ export default function CallToAction() {
         Your browser does not support the video tag.
       </video> */}
 
-      <div ref={nextDivRef} className={`z-10 h-[600vh] bg-black w-full mb-[90vh] ${isNextDivVisible?"opacity-100":"opacity-0"}`}><ScrollControlledVideo/></div>
+      <div ref={nextDivRef} className={`z-10 h-[600vh] bg-black w-full mb-[90vh] 
+        ${isNextDivVisible?"opacity-100":"opacity-0"}`}><ScrollControlledVideo isNextDivExited={isNextDivVisible}/></div>
 
       {/* Line 3 */}
       <div ref={containerRef3} 

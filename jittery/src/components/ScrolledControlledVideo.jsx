@@ -3,7 +3,7 @@
 import { useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export default function ScrollControlledVideo() {
+export default function ScrollControlledVideo({isNextDivExited}) {
 	const ref = useRef(null);
 	const [images, setImages] = useState([]);
 	const isImagesLoaded = useRef(false);
@@ -59,7 +59,7 @@ export default function ScrollControlledVideo() {
 		>
 			<div
 				style={{
-					position: 'fixed',
+					position: isNextDivExited?'fixed':'relative',
 					top: 0,
 					left: 0,
 					width: "full",
