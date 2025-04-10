@@ -193,7 +193,7 @@ export default function CallToAction() {
         <div
           ref={containerRef1}
           className="flex flex-col items-center justify-center sticky top-0 font-bold mb-8
-        text-center px-4 left-0 right-0 transition-all duration-500"
+        text-center transition-all duration-500 w-full"
           style={{
             opacity: calculateOpacity(0),
             fontSize
