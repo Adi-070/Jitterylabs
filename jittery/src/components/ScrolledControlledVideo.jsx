@@ -62,8 +62,8 @@ export default function ScrollControlledVideo({isNextDivExited}) {
 					position: isNextDivExited?'fixed':'relative',
 					top: 0,
 					left: 0,
-					width: "full",
-					height: "full",
+					width: '100%',
+					height: '100%',
 					display: 'flex',
 					justifyContent: 'center',
 					alignItems: 'center',
@@ -75,7 +75,7 @@ export default function ScrollControlledVideo({isNextDivExited}) {
 					ref={ref}
 					style={{
 						width: '100%',
-						height: '100%',
+						height: 'auto',
 						objectFit: 'cover',
 					}}
 				/>

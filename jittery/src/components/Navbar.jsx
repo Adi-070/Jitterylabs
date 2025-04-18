@@ -55,8 +55,8 @@ function FloatingMenu({ isVisible, onClick }) {
       className={`fixed top-4 text-white right-4 z-50 transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
     >
       <Button variant="outline" size="icon" onClick={onClick}>
-        <Menu className="h-6 w-6" />
-        <span className="sr-only">Open menu</span>
+      <img src="JL-white-transparent.png" 
+            style={{height: "50px"}}/>
       </Button>
     </div>
   )
@@ -92,10 +92,10 @@ export function Navbar() {
       </div>
       {/* Top Navigation */}
       <nav className="flex h-11 items-center justify-center px-4 text-xs font-light">
-        <div className="flex w-full max-w-[1024px] items-center justify-between gap-8">
+        <div className="flex w-full max-w-[1024px] items-center justify-between">
           <Link href="/" className="text-white hover:opacity-80">
-            <Apple className="h-5 w-5" />
-            <span className="sr-only">Apple</span>
+            <img src="JL-white-transparent.png" 
+            style={{height: "75px"}}/>
           </Link>
 
           <div className="hidden flex-1 items-center justify-center gap-8 lg:flex">

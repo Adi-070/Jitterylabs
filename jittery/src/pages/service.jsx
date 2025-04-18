@@ -3,10 +3,10 @@ import { Navbar } from "@/components/Navbar";
 
 const service = () => {
     return (
-        <div className="min-h-screen bg-black">
+        <div className=" bg-black">
             <Navbar /><br/>
-            <main className="container text-white mx-auto px-4 py-12">
-                Working......
+            <main className="container text-white mx-auto px-4">
+                <Services/>
             </main>
         </div>
     )
