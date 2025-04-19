@@ -3,9 +3,7 @@ import { useState, useEffect } from "react";
 export default function Projects() {
 
   const mockProjects = [
-    { title: "Rewrite the Stars", videoId: "pRfmrE0ToTo" },
-    { title: "Timber", videoId: "hHUbLv4ThOo" },
-    { title: "One Call Away", videoId: "BxuY9FET9Y4" },
+   
   ];
 
   
@@ -29,7 +27,7 @@ export default function Projects() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch("http://localhost:1337/api/projects?populate=*");
+        const response = await fetch("https://backend-jittery.onrender.com/api/projects?populate=*");
         
         if (!response.ok) {
           throw new Error("Failed to fetch projects");
@@ -40,7 +38,7 @@ export default function Projects() {
         // Transform API data to match the format we need
         if (data && data.data && data.data.length > 0) {
           const formattedProjects = data.data.map(item => ({
-            title: item.title,
+            title: item.project_title,
             videoId: extractVideoId(item.link),
             documentId: item.documentId
           }));
