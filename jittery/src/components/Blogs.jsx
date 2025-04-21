@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 
-const Blogs = () => {
+export const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
@@ -49,4 +49,4 @@ const Blogs = () => {
   );
 };
 
-export default Blogs;
+
