@@ -4,7 +4,19 @@ import { Copyright } from "lucide-react";
 
 export default function Services(){
     return(
+      <main>
+        <video
+        loop
+        muted
+        playsInline
+        autoPlay
+        className={`fixed top-0 left-0 w-full`}
+        >
+        <source src="/background-video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+        </video>
         <div style={{ fontFamily: "monospace", fontSize: "1.1rem", color: "#fff", padding: "1.5rem", position:"fixed", bottom: 0, left:0}}>
+          
             <div style = {{height: 350}}>
             <TypingText 
             text="Jittery Labs" 
@@ -32,6 +44,7 @@ export default function Services(){
                 </div>
             </div>
         </div>
+        </main>
     );
 }
 

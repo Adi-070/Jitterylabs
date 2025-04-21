@@ -165,8 +165,8 @@ export default function CallToAction() {
     const containerRect3 = containerRef3.current.getBoundingClientRect()
 
     if (index === 0) {
-      const distance = centerY - containerRect1.top
-      return distance <= 0 ? 1 : Math.max(1 - distance / (window.innerHeight / 2), 0.3)
+      const distance = Math.abs(centerY - containerRect1.top)
+      return distance <= 0 ? 1 : Math.max(1 - distance / (window.innerHeight + 5 / 2), 0.3)
     } else if (index === 1) {
       const distance = Math.abs(centerY - containerRect2.top)
       return distance <= 0 ? 1 : Math.max(1 - distance / (window.innerHeight / 2), 0.3)
@@ -176,7 +176,7 @@ export default function CallToAction() {
   }
 
   return (
-    <main className="min-h-[100vh] text-white flex flex-col items-center justify-center pt-[30vh] overflow-hidden">
+    <main className="min-h-[100vh] text-white flex flex-col items-center justify-center pt-[14vh] overflow-hidden">
       {/* Full-screen video */}
       <video
         ref={videoRef}

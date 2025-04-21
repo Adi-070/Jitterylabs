@@ -33,7 +33,7 @@ function SidePanel({ isOpen, onClose }) {
           </SheetClose>
           <SheetClose asChild>
             <Link href="/about" className="text-lg hover:text-gray-600">
-              About us
+              Schedule a Meeting
             </Link>
           </SheetClose>
           <SheetClose asChild>
@@ -87,7 +87,7 @@ export function Navbar() {
   return (
     <>
     <div className="relative w-full bg-black text-white border-b-2 border-white z-20">
-      <div className="flex text-[30px] font-bold items-center justify-center mt-3">
+      <div className="flex text-[30px] font-bold items-center justify-center mt-3 font-sans">
         Jittery Labs
       </div>
       {/* Top Navigation */}
@@ -98,20 +98,20 @@ export function Navbar() {
             style={{height: "75px"}}/>
           </Link>
 
-          <div className="hidden flex-1 items-center justify-center gap-8 lg:flex">
-            <Link href="/" className="text-gray-300 hover:text-white hover:opacity-80">
+          <div className="hidden flex-1 items-center justify-center gap-8 pr-[4.2rem] lg:flex">
+            <Link href="/" className="text-gray-300 hover:text-white">
               Home
             </Link>
-            <Link href="/project" className="text-gray-300 hover:text-white hover:opacity-80">
+            <Link href="/project" className="text-gray-300 hover:text-white">
               Projects
             </Link>
-            <Link href="/service" className="text-gray-300 hover:text-white hover:opacity-80">
+            <Link href="/service" className="text-gray-300 hover:text-white">
               Services
             </Link>
-            <Link href="/about" className="text-gray-300 hover:text-white hover:opacity-80">
-              About us
+            <Link href="/about" className="text-gray-300 hover:text-white ">
+              Schedule a Meeting
             </Link>
-            <Link href="/blog" className="text-gray-300 hover:text-white hover:opacity-80">
+            <Link href="/blog" className="text-gray-300 hover:text-white ">
               Blogs
             </Link>
           </div>

@@ -84,7 +84,7 @@ export default function AboutUs() {
           {/* Left side content remains the same */}
           <div className="md:w-1/2 p-8">
             <h1 className="text-4xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
-              About Us
+              Schedule a Meeting
             </h1>
             <p className="mb-8 text-gray-300 leading-relaxed">
               We're a forward-thinking company dedicated to revolutionizing the way you work. Our innovative solutions
