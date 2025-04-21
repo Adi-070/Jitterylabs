@@ -1,7 +1,7 @@
 import AboutUs from '@/components/AboutUs'
 import React from 'react'
 import { Navbar } from '@/components/Navbar'
-import Blogs from '@/components/blogs'
+import {Blogs} from '@/components/blogs'
 
 const about = () => {
   return (
